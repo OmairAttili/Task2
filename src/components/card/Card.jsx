@@ -8,10 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Box, Rating } from '@mui/material';
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme }) => ({
+(({ theme }) => ({
   marginLeft: 'auto',
   transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
@@ -40,12 +37,13 @@ export default function RecipeReviewCard(props) {
         title={props.title}
       />
       <CardMedia
+      height={300}
         component="img"
         image={props.image}
         alt={props.image}
       />
       <CardContent>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary',mt:3}}>
           {props.desc}
         </Typography>
         <Typography variant='h3'component='h3'

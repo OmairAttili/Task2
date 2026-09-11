@@ -1,17 +1,36 @@
-import { Box, Card, Container, Typography } from '@mui/material'
+import { Box, CircularProgress, Container, Typography,Alert } from '@mui/material'
 import axios from 'axios'
 import React, { use, useEffect, useState } from 'react'
 import RecipeReviewCard from '../components/card/Card';
 
 function Home() {
     const [product,setProduct]= useState([]);
+    const [Loading,isLoading]= useState(true);
+    const [error,isError]= useState("");
     const getProducts = async()=>{
-        const response = await axios.get(`https://dummyjson.com/products`);
-        setProduct (response.data.products);
+        try{
+            const response = await axios.get(`https://dummyjson.com/products`);
+            setProduct (response.data.products);
+        }catch(e){
+            isError(e);
+        }finally{
+            isLoading(false);
+        }
     }
     useEffect(()=>{
         getProducts();
     },[])
+    if(Loading){
+        return <CircularProgress aria-label="Loading…" size={60}
+         sx={{color:'black',py:5,display:'flex',justifyContent:'center',alignItems:'center',mx:'auto'}} />
+    }
+    if(error){
+        return <Box sx={{py:5,width:'30%',mx:'auto'}}>
+            <Alert variant="filled" severity="error">
+                Sorry,Error to get data
+            </Alert>
+        </Box>
+    }
   return <>
   <Box sx={{py:10}} id="Products">
     <Container>
